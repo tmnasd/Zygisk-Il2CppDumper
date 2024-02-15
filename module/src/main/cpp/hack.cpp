@@ -18,10 +18,12 @@
 #include <array>
 
 void hack_start(const char *game_data_dir) {
+	LOGI("hack_start called");
     bool load = false;
     for (int i = 0; i < 10; i++) {
         void *handle = xdl_open("libil2cpp.so", 0);
         if (handle) {
+			LOGI("Found libil2cpp.so");
             load = true;
             il2cpp_api_init(handle);
             il2cpp_dump(game_data_dir);
@@ -36,6 +38,7 @@ void hack_start(const char *game_data_dir) {
 }
 
 std::string GetLibDir(JavaVM *vms) {
+	LOGI("GetLibDir Called");
     JNIEnv *env = nullptr;
     vms->AttachCurrentThread(&env, nullptr);
     jclass activity_thread_clz = env->FindClass("android/app/ActivityThread");
@@ -112,6 +115,7 @@ struct NativeBridgeCallbacks {
 };
 
 bool NativeBridgeLoad(const char *game_data_dir, int api_level, void *data, size_t length) {
+	LOGI("NativeBridgeLoad Called");
     //TODO 等待houdini初始化
     sleep(5);
 
